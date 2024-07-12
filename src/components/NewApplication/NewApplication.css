@@ -1,0 +1,71 @@
+body {
+    font-family: Arial, sans-serif;
+}
+
+.form {
+    border: 4px solid #000; /* Adds a solid border around the form */
+    padding: 20px;
+    margin: 20px auto;
+    max-width: 800px; /* Limits the maximum width of the form */
+    box-shadow: 2px 2px 12px rgba(0, 0, 0, 0.2); /* Adds shadow for better visual appearance */
+    border-radius: 15px; /* Adds rounded corners */
+    background-color: #f9f9f9; /* Optional: adds a light background color */
+}
+
+.form h1, .form h3, .form h4 {
+    text-align: center;
+    color: #333;
+}
+
+.form-label {
+    display: block;
+    margin-bottom: 5px;
+    font-weight: bold;
+    color: #555;
+}
+
+.form-input, .option, .hidden-input {
+    width: 100%;
+    padding: 10px;
+    margin-bottom: 10px;
+    box-sizing: border-box;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+}
+
+.radio-btn-container {
+    display: flex;
+    align-items: center;
+    margin-bottom: 10px;
+}
+
+
+.radio-btn {
+    margin-right: 10px;
+}
+
+button {
+    padding: 10px 20px;
+    margin-top: 10px;
+    cursor: pointer;
+    background-color: #007BFF;
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    font-size: 16px;
+}
+
+button:hover {
+    background-color: #0056b3;
+}
+
+.hidden {
+    display: none;
+}
+
+.hidden-label {
+    display: block;
+    margin-top: 10px;
+    font-weight: bold;
+    color: #555;
+}
