@@ -10,8 +10,8 @@ function App() {
   return (
    <div>
     {/* <LoginForm/> */}
-    <NewApplication/>
-    {/* <Pcp/> */}
+    {/* <NewApplication/> */}
+    <Pcp/>
     </div>
   );
 }

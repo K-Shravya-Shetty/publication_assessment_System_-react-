@@ -2,11 +2,13 @@ body {
     font-family: Arial, sans-serif;
     
     
+    
 }
 
 table {
     width: 100%;
     border-collapse: collapse;
+    
    
 }
 
@@ -22,6 +24,7 @@ form {
     max-width: 800px; /* Limits the maximum width of the form */
     box-shadow: 3px 3px 14px rgba(0, 0, 0, 0.2); /* Optional: adds shadow for better visual appearance */
     border-radius: 15px; /* Optional: adds rounded corners */
+    background-color: white;
 }
 
 #amountCell,
