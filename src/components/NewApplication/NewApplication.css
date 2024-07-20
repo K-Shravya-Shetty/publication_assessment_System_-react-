@@ -69,3 +69,21 @@ button:hover {
     font-weight: bold;
     color: #555;
 }
+
+.generate-report-btn, .submit-btn {
+    padding: 10px 20px;
+    margin: 10px;
+    border: none;
+    border-radius: 5px;
+    color: #fff;
+    cursor: pointer;
+  }
+  
+  .generate-report-btn {
+    background-color:#007bff;
+  }
+  
+  .submit-btn {
+    background-color: #007bff;
+  }
+  

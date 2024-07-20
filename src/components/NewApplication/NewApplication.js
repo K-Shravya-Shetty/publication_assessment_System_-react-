@@ -1,4 +1,7 @@
 import React, { useState } from 'react';
+import { saveAs } from 'file-saver';
+import jsPDF from 'jspdf';
+import html2canvas from 'html2canvas';
 import './NewApplication.css';
 
 const NewApplication = () => {
@@ -48,6 +51,8 @@ const NewApplication = () => {
     },
   });
 
+  const [generatedPdfUrl, setGeneratedPdfUrl] = useState('');
+
   const handleChange = (e) => {
     const { name, value } = e.target;
     setFormData({ ...formData, [name]: value });
@@ -72,6 +77,33 @@ const NewApplication = () => {
     e.preventDefault();
     // Handle form submission logic here
     console.log(formData);
+  };
+
+  const handleGenerateReport = async () => {
+    const reportContent = document.getElementById('report-content');
+
+    // Capture the content as a canvas
+    const canvas = await html2canvas(reportContent);
+    const imgData = canvas.toDataURL('image/png');
+
+    // Generate PDF
+    const doc = new jsPDF();
+    doc.addImage(imgData, 'PNG', 10, 10);
+    const pdfBlob = doc.output('blob');
+
+    // Create a Blob URL for the PDF and trigger the download
+    // saveAs(pdfBlob, 'report.pdf');
+    const pdfUrl = URL.createObjectURL(pdfBlob);
+    setGeneratedPdfUrl(pdfUrl);
+  };
+
+  const handleDownloadReport = () => {
+    // handleGenerateReport();
+    if (generatedPdfUrl) {
+      saveAs(generatedPdfUrl, 'report.pdf');
+    } else {
+      handleGenerateReport();
+    }
   };
 
   return (
@@ -265,7 +297,7 @@ const NewApplication = () => {
               value={formData.conferenceDetails.indexing}
               onChange={(e) => handleNestedChange('conferenceDetails', e)}
             /><br />
-            <label className="form-label">Registration/Publication Fee:</label>
+            <label className="form-label">Conference fee:</label>
             <input
               type="text"
               className="form-input"
@@ -273,7 +305,7 @@ const NewApplication = () => {
               value={formData.conferenceDetails.fee}
               onChange={(e) => handleNestedChange('conferenceDetails', e)}
             /><br />
-            <label className="form-label">Payment Details:</label>
+            <label className="form-label">Fee payment mode:</label>
             <input
               type="text"
               className="form-input"
@@ -281,7 +313,7 @@ const NewApplication = () => {
               value={formData.conferenceDetails.payment}
               onChange={(e) => handleNestedChange('conferenceDetails', e)}
             /><br />
-            <label className="form-label">Support requested from college:</label>
+            <label className="form-label">Support provided:</label>
             <input
               type="text"
               className="form-input"
@@ -294,21 +326,13 @@ const NewApplication = () => {
 
         {formData.application === 'conference-pub' && (
           <div>
-            <h4>Cash Award for Conference Publication Details</h4>
+            <h4>Conference Publication Details</h4>
             <label className="form-label">Name of the conference:</label>
             <input
               type="text"
               className="form-input"
               name="name"
               value={formData.conferenceDetails.name}
-              onChange={(e) => handleNestedChange('conferenceDetails', e)}
-            /><br />
-            <label className="form-label">Venue:</label>
-            <input
-              type="text"
-              className="form-input"
-              name="venue"
-              value={formData.conferenceDetails.venue}
               onChange={(e) => handleNestedChange('conferenceDetails', e)}
             /><br />
             <label className="form-label">Date of the conference:</label>
@@ -335,12 +359,36 @@ const NewApplication = () => {
               value={formData.conferenceDetails.indexing}
               onChange={(e) => handleNestedChange('conferenceDetails', e)}
             /><br />
+            <label className="form-label">Conference fee:</label>
+            <input
+              type="text"
+              className="form-input"
+              name="fee"
+              value={formData.conferenceDetails.fee}
+              onChange={(e) => handleNestedChange('conferenceDetails', e)}
+            /><br />
+            <label className="form-label">Fee payment mode:</label>
+            <input
+              type="text"
+              className="form-input"
+              name="payment"
+              value={formData.conferenceDetails.payment}
+              onChange={(e) => handleNestedChange('conferenceDetails', e)}
+            /><br />
+            <label className="form-label">Support provided:</label>
+            <input
+              type="text"
+              className="form-input"
+              name="support"
+              value={formData.conferenceDetails.support}
+              onChange={(e) => handleNestedChange('conferenceDetails', e)}
+            /><br />
           </div>
         )}
 
         {formData.application === 'journal-pub' && (
           <div>
-            <h4>Cash Award for Journal Publication Details</h4>
+            <h4>Journal Publication Details</h4>
             <label className="form-label">Name of the journal:</label>
             <input
               type="text"
@@ -381,7 +429,7 @@ const NewApplication = () => {
               value={formData.journalDetails.impactFactor}
               onChange={(e) => handleNestedChange('journalDetails', e)}
             /><br />
-            <label className="form-label">SJR Ranking:</label>
+            <label className="form-label">SJR:</label>
             <input
               type="text"
               className="form-input"
@@ -394,8 +442,8 @@ const NewApplication = () => {
 
         {formData.application === 'book-chp-pub' && (
           <div>
-            <h4>Cash Award for Book Chapter Details</h4>
-            <label className="form-label">Name of the book:</label>
+            <h4>Book Chapter Details</h4>
+            <label className="form-label">Title of the book:</label>
             <input
               type="text"
               className="form-input"
@@ -403,7 +451,7 @@ const NewApplication = () => {
               value={formData.bookChapterDetails.name}
               onChange={(e) => handleNestedChange('bookChapterDetails', e)}
             /><br />
-            <label className="form-label">Name of Editors:</label>
+            <label className="form-label">Editors:</label>
             <input
               type="text"
               className="form-input"
@@ -443,7 +491,7 @@ const NewApplication = () => {
               value={formData.bookChapterDetails.impactFactor}
               onChange={(e) => handleNestedChange('bookChapterDetails', e)}
             /><br />
-            <label className="form-label">SJR Rating:</label>
+            <label className="form-label">SJR:</label>
             <input
               type="text"
               className="form-input"
@@ -456,8 +504,8 @@ const NewApplication = () => {
 
         {formData.application === 'book' && (
           <div>
-            <h4>Cash Award for Book Details</h4>
-            <label className="form-label">Name of the book:</label>
+            <h4>Book Details</h4>
+            <label className="form-label">Title of the book:</label>
             <input
               type="text"
               className="form-input"
@@ -465,7 +513,7 @@ const NewApplication = () => {
               value={formData.bookDetails.name}
               onChange={(e) => handleNestedChange('bookDetails', e)}
             /><br />
-            <label className="form-label">Name of Authors:</label>
+            <label className="form-label">Authors:</label>
             <input
               type="text"
               className="form-input"
@@ -473,7 +521,7 @@ const NewApplication = () => {
               value={formData.bookDetails.authors}
               onChange={(e) => handleNestedChange('bookDetails', e)}
             /><br />
-            <label className="form-label">Publication Date:</label>
+            <label className="form-label">Date of publication:</label>
             <input
               type="date"
               className="form-input"
@@ -508,6 +556,84 @@ const NewApplication = () => {
           </div>
         )}
 
+        <div id="report-content">
+          <h2>Generated Report</h2>
+          <p><strong>Name:</strong> {formData.name}</p>
+          <p><strong>Department:</strong> {formData.department}</p>
+          <p><strong>Email:</strong> {formData.email}</p>
+          <p><strong>Phone Number:</strong> {formData.phoneNumber}</p>
+          <p><strong>Title of Publication:</strong> {formData.titleOfPublication}</p>
+          <p><strong>Co-Authors:</strong> {formData.coAuthors}</p>
+          <p><strong>Type of Publication:</strong> {formData.typeOfPublication}</p>
+          <p><strong>Application:</strong> {formData.application}</p>
+
+          {formData.application === 'conference-reg' && (
+            <div>
+              <h4>Conference Registration/Publication Support Details</h4>
+              <p><strong>Name:</strong> {formData.conferenceDetails.name}</p>
+              <p><strong>Venue:</strong> {formData.conferenceDetails.venue}</p>
+              <p><strong>Date:</strong> {formData.conferenceDetails.date}</p>
+              <p><strong>Publisher:</strong> {formData.conferenceDetails.publisher}</p>
+              <p><strong>Indexing:</strong> {formData.conferenceDetails.indexing}</p>
+              <p><strong>Fee:</strong> {formData.conferenceDetails.fee}</p>
+              <p><strong>Payment Mode:</strong> {formData.conferenceDetails.payment}</p>
+              <p><strong>Support:</strong> {formData.conferenceDetails.support}</p>
+            </div>
+          )}
+
+          {formData.application === 'conference-pub' && (
+            <div>
+              <h4>Conference Publication Details</h4>
+              <p><strong>Name:</strong> {formData.conferenceDetails.name}</p>
+              <p><strong>Date:</strong> {formData.conferenceDetails.date}</p>
+              <p><strong>Publisher:</strong> {formData.conferenceDetails.publisher}</p>
+              <p><strong>Indexing:</strong> {formData.conferenceDetails.indexing}</p>
+              <p><strong>Fee:</strong> {formData.conferenceDetails.fee}</p>
+              <p><strong>Payment Mode:</strong> {formData.conferenceDetails.payment}</p>
+              <p><strong>Support:</strong> {formData.conferenceDetails.support}</p>
+            </div>
+          )}
+
+          {formData.application === 'journal-pub' && (
+            <div>
+              <h4>Journal Publication Details</h4>
+              <p><strong>Name:</strong> {formData.journalDetails.name}</p>
+              <p><strong>Date:</strong> {formData.journalDetails.date}</p>
+              <p><strong>Publisher:</strong> {formData.journalDetails.publisher}</p>
+              <p><strong>Indexing:</strong> {formData.journalDetails.indexing}</p>
+              <p><strong>Impact Factor:</strong> {formData.journalDetails.impactFactor}</p>
+              <p><strong>SJR:</strong> {formData.journalDetails.sjr}</p>
+            </div>
+          )}
+
+          {formData.application === 'book-chp-pub' && (
+            <div>
+              <h4>Book Chapter Details</h4>
+              <p><strong>Title:</strong> {formData.bookChapterDetails.name}</p>
+              <p><strong>Editors:</strong> {formData.bookChapterDetails.editors}</p>
+              <p><strong>Date:</strong> {formData.bookChapterDetails.date}</p>
+              <p><strong>Publisher:</strong> {formData.bookChapterDetails.publisher}</p>
+              <p><strong>Indexing:</strong> {formData.bookChapterDetails.indexing}</p>
+              <p><strong>Impact Factor:</strong> {formData.bookChapterDetails.impactFactor}</p>
+              <p><strong>SJR:</strong> {formData.bookChapterDetails.sjr}</p>
+            </div>
+          )}
+
+          {formData.application === 'book' && (
+            <div>
+              <h4>Book Details</h4>
+              <p><strong>Title:</strong> {formData.bookDetails.name}</p>
+              <p><strong>Authors:</strong> {formData.bookDetails.authors}</p>
+              <p><strong>Date:</strong> {formData.bookDetails.date}</p>
+              <p><strong>Publisher:</strong> {formData.bookDetails.publisher}</p>
+              <p><strong>ISBN:</strong> {formData.bookDetails.isbn}</p>
+              <p><strong>ISSN:</strong> {formData.bookDetails.issn}</p>
+            </div>
+          )}
+        </div>
+
+        {/* <button type="button" onClick={handleGenerateReport}>Generate Report</button> */}
+        <button type="button" onClick={handleDownloadReport}>Download Report</button>
         <button type="submit">Submit</button>
       </form>
     </div>
@@ -515,3 +641,4 @@ const NewApplication = () => {
 };
 
 export default NewApplication;
+
