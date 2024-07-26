@@ -1,23 +1,23 @@
 
-// import './App.css';
+/* import './App.css';
 // import Dashboard from './components/Dashboard/Dashboard';
-// import LoginForm from './components/LoginForm/LoginForm';
+import LoginForm from './components/LoginForm/LoginForm';
 // import NewApplication from './components/NewApplication/NewApplication';
 // import Pcp from './components/Pcp/Pcp';
 
 
 
-// function App() {
-//   return (
-//    <div>
-//     {/* <LoginForm/> */}
-//     {/* <NewApplication/> */}
-//     <Dashboard/>
-//     </div>
-//   );
-// }
+function App() {
+  return (
+   <div>
+  <LoginForm/> 
+     <NewApplication/> 
+   <Dashboard/>
+     </div>
+  );
+ }
 
-// export default App;
+export default App;*/
 
 
 import React from 'react';
