@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import './LoginForm.css'; // Ensure you create corresponding CSS files or include styles in App.css
 import sjecLogo from '../../images/sjec-logo.png';
+
 function LoginForm() {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
@@ -11,13 +12,15 @@ function LoginForm() {
     role: ''
   });
   const [isPopupActive, setIsPopupActive] = useState(false);
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const [loginMessage, setLoginMessage] = useState('');
 
   const validateEmail = (email) => {
     const re = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
     return re.test(email);
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
     let valid = true;
     const newErrors = { email: '', password: '', role: '' };
@@ -40,8 +43,27 @@ function LoginForm() {
     setErrors(newErrors);
 
     if (valid) {
-      // Submit the form or perform further actions
-      console.log('Form submitted');
+      try {
+        const response = await fetch('http://localhost:5000/api/login', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json'
+          },
+          body: JSON.stringify({ email, password, role })
+        });
+        
+        const data = await response.json();
+
+        if (response.status === 200) {
+          setIsLoggedIn(true);
+          setLoginMessage(data.message);
+          setIsPopupActive(false);
+        } else {
+          setLoginMessage(data.message);
+        }
+      } catch (error) {
+        setLoginMessage('An error occurred. Please try again.');
+      }
     }
   };
 
@@ -49,7 +71,7 @@ function LoginForm() {
     <>
       <header>
         <div className="header-content">
-        <img src={sjecLogo} style={{ height: '90px' }} alt="Sjec Logo" />
+          <img src={sjecLogo} style={{ height: '90px' }} alt="Sjec Logo" />
           <h2 className="logo">Publication Assessment System</h2>
         </div>
         <button className="btnlogin-popup" onClick={() => setIsPopupActive(true)}>Login</button>
@@ -105,8 +127,11 @@ function LoginForm() {
           </div>
         </div>
       )}
+      {loginMessage && <div className={`login-message ${isLoggedIn ? 'success' : 'error'}`}>{loginMessage}
+        </div>}
     </>
   );
 }
 
 export default LoginForm;
+
