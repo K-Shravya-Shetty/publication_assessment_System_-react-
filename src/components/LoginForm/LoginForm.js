@@ -68,7 +68,7 @@ function LoginForm() {
   };
 
   return (
-    <>
+    <div className='login-page'>
       <header>
         <div className="header-content">
           <img src={sjecLogo} style={{ height: '90px' }} alt="Sjec Logo" />
@@ -129,7 +129,7 @@ function LoginForm() {
       )}
       {loginMessage && <div className={`login-message ${isLoggedIn ? 'success' : 'error'}`}>{loginMessage}
         </div>}
-    </>
+    </div>
   );
 }
 

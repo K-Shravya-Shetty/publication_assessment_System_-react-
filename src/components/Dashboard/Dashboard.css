@@ -1,4 +1,4 @@
-.nav {
+/* .nav {
     background-color: #86C232;
   }
   
@@ -22,5 +22,90 @@
   
   li.logo {
     margin-right: auto;
+  }
+   */
+
+   .nav {
+    background-color: #3572EF;
+    width: 100%; /* Full width of the page */
+    position: fixed; /* Fix it at the top if desired */
+    top: 0;
+    left: 0;
+    z-index: 1000; /* Ensure it stays above other content */
+  }
+  
+  a {
+    text-decoration: none;
+    font-size: 20px;
+    color: white;
+  }
+  
+  #list {
+    display: flex;
+    list-style-type: none;
+    align-items: center;
+    padding: 0.5em;
+    margin: 0;
+    width: 100%; /* Full width */
+    box-sizing: border-box; /* Include padding and border in the element's total width and height */
+  }
+  
+  li {
+    margin: 0 1em;
+  }
+  
+  li.logo {
+    margin-right: auto;
+  }
+  
+  /* New Widget Styles */
+  .dashboard-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-top: 80px; /* Adjusted to account for the fixed navigation bar height */
+    padding: 0 10px; /* Add some padding on the sides for better appearance */
+    width: 100%;
+    box-sizing: border-box; /* Include padding and border in the element's total width and height */
+  }
+  
+  .widgets {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+  }
+  
+  .widget {
+    background-color: #A7E6FF; /* Light pastel blue */
+    border: 1px solid #ddd;
+    border-radius: 20px; /* Rounded corners */
+    padding: 20px;
+    margin: 10px;
+    text-align: center;
+    width: 200px;
+    height: 200px; /* Making it a square */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    transition: transform 0.3s, box-shadow 0.3s; /* Smooth transition for hover effect */
+  }
+  
+  .widget:hover {
+    transform: scale(1.05); /* Slightly enlarge on hover */
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2); /* 
+    Deeper shadow on hover */
+    background-color: #3ABEF9;
+  }
+  
+  .widget-link {
+    text-decoration: none;
+    color: #333;
+    font-size: 18px;
+    font-weight: bold;
+  }
+  
+  .widget-link:hover {
+    color: white;
   }
   
