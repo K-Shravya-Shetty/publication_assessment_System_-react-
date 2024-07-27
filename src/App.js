@@ -26,6 +26,7 @@ import Dashboard from './components/Dashboard/Dashboard';
 import NewApplication from './components/NewApplication/NewApplication';
 import LoginForm from './components/LoginForm/LoginForm';
 
+
 function App() {
   return (
     <Routes>

@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { saveAs } from "file-saver";
 import jsPDF from "jspdf";
+import axios from 'axios';
 import html2canvas from "html2canvas";
 import "./NewApplication.css";
 
@@ -51,7 +52,7 @@ const NewApplication = () => {
     },
   });
 
-  const [generatedPdfUrl, setGeneratedPdfUrl] = useState("");
+  /*const [generatedPdfUrl, setGeneratedPdfUrl] = useState("");*/
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -73,13 +74,24 @@ const NewApplication = () => {
     setFormData({ ...formData, application: e.target.value });
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    // Handle form submission logic here
-    console.log(formData);
+
+    // Generate the PDF
+    const reportContent = document.getElementById("report-content");
+    const canvas = await html2canvas(reportContent);
+    const imgData = canvas.toDataURL("image/png");
+
+    // Generate PDF
+    const doc = new jsPDF();
+    doc.addImage(imgData, "PNG", 10, 10);
+    const pdfBlob = doc.output("blob");
+
+    // Save the PDF
+    saveAs(pdfBlob, "report.pdf");
   };
 
-  const handleGenerateReport = async () => {
+  /*const handleGenerateReport = async () => {
     const reportContent = document.getElementById("report-content");
 
     // Capture the content as a canvas
@@ -104,8 +116,7 @@ const NewApplication = () => {
     } else {
       handleGenerateReport();
     }
-  };
-
+  };*/
   return (
     <div className="form">
       <form onSubmit={handleSubmit}>
@@ -778,11 +789,11 @@ const NewApplication = () => {
           )}
         </div>
 
-        {/* <button type="button" onClick={handleGenerateReport}>Generate Report</button> */}
+        {/* <button type="button" onClick={handleGenerateReport}>Generate Report</button> 
         <button type="button" onClick={handleDownloadReport}>
           Download Report
-        </button>
-        <button type="submit">Submit</button>
+        </button>*/}
+        <button type="submit">Genrate pdf</button>
       </form>
     </div>
   );
