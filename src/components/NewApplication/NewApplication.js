@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { saveAs } from "file-saver";
 import jsPDF from "jspdf";
-import axios from 'axios';
+import axios from "axios";
 import html2canvas from "html2canvas";
 import "./NewApplication.css";
 
@@ -794,6 +794,15 @@ const NewApplication = () => {
           Download Report
         </button>*/}
         <button type="submit">Genrate pdf</button>
+      </form>
+
+      <form
+        action="http://localhost:3001/upload"
+        method="POST"
+        enctype="multipart/form-data"
+      >
+        <input type="file" name="file" />
+        <button type="submit">Upload</button>
       </form>
     </div>
   );

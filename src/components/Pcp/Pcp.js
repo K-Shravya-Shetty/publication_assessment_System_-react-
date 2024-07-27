@@ -1,14 +1,14 @@
-import React, { useState } from 'react';
-import './Pcp.css';
-import { PDFDocument, rgb, StandardFonts } from 'pdf-lib';
+import React, { useState } from "react";
+import "./Pcp.css";
+import { PDFDocument, rgb, StandardFonts } from "pdf-lib";
 
 function Pcp() {
-  const [amount, setAmount] = useState('');
-  const [approvalMessage, setApprovalMessage] = useState('');
-  const [comments, setComments] = useState('');
+  const [amount, setAmount] = useState("");
+  const [approvalMessage, setApprovalMessage] = useState("");
+  const [comments, setComments] = useState("");
   const [pdfFiles, setPdfFiles] = useState([]);
   const [cashAwardGiven, setCashAwardGiven] = useState(null);
-  const [generatedPdfUrl, setGeneratedPdfUrl] = useState('');
+  const [generatedPdfUrl, setGeneratedPdfUrl] = useState("");
 
   const handleAmountChange = (e) => {
     setAmount(e.target.value);
@@ -19,7 +19,7 @@ function Pcp() {
     if (amount) {
       setApprovalMessage(`Amount entered: INR ${amount}`);
     } else {
-      setApprovalMessage('Please enter a valid amount.');
+      setApprovalMessage("Please enter a valid amount.");
     }
   };
 
@@ -38,7 +38,7 @@ function Pcp() {
   };
 
   const handleRadioChange = (e) => {
-    setCashAwardGiven(e.target.value === 'yes');
+    setCashAwardGiven(e.target.value === "yes");
   };
 
   const generatePdfReport = async () => {
@@ -50,11 +50,11 @@ function Pcp() {
       const font = await mergedPdf.embedFont(StandardFonts.Helvetica);
 
       // Title and description
-      const title = 'PCP Application Report';
+      const title = "PCP Application Report";
       let description = `Details:
       Amount: INR ${amount}
       Comments: ${comments}
-      Cash Award Given: ${cashAwardGiven ? 'YES' : 'NO'}`;
+      Cash Award Given: ${cashAwardGiven ? "YES" : "NO"}`;
 
       // Add a new page to the PDF
       const page = mergedPdf.addPage();
@@ -83,7 +83,10 @@ function Pcp() {
         const pdf = await PDFDocument.load(pdfBytes);
 
         // Get pages of each PDF and copy to the merged PDF
-        const copiedPages = await mergedPdf.copyPages(pdf, pdf.getPageIndices());
+        const copiedPages = await mergedPdf.copyPages(
+          pdf,
+          pdf.getPageIndices()
+        );
         copiedPages.forEach((copiedPage) => {
           mergedPdf.addPage(copiedPage);
         });
@@ -94,7 +97,7 @@ function Pcp() {
 
       // Save the merged PDF as a Blob
       const mergedPdfBytes = await mergedPdf.save();
-      const blob = new Blob([mergedPdfBytes], { type: 'application/pdf' });
+      const blob = new Blob([mergedPdfBytes], { type: "application/pdf" });
 
       // Generate URL for viewing the PDF in the browser
       const pdfUrl = URL.createObjectURL(blob);
@@ -102,21 +105,21 @@ function Pcp() {
 
       // Clear uploaded files and form fields after generating report
       setPdfFiles([]);
-      setAmount('');
-      setComments('');
+      setAmount("");
+      setComments("");
       setCashAwardGiven(null);
-      setApprovalMessage('Report generated successfully.');
+      setApprovalMessage("Report generated successfully.");
     } catch (error) {
-      console.error('Error generating PDF report:', error);
-      setApprovalMessage('Error generating PDF report. Please try again.');
+      console.error("Error generating PDF report:", error);
+      setApprovalMessage("Error generating PDF report. Please try again.");
     }
   };
 
   const downloadPdfReport = () => {
     // Download the PDF file
-    const a = document.createElement('a');
+    const a = document.createElement("a");
     a.href = generatedPdfUrl;
-    a.download = 'pcp_application_report.pdf';
+    a.download = "pcp_application_report.pdf";
     document.body.appendChild(a);
     a.click();
     document.body.removeChild(a);
@@ -130,7 +133,9 @@ function Pcp() {
         <table>
           <tbody>
             <tr>
-              <td><strong>Cash award maybe given</strong></td>
+              <td>
+                <strong>Cash award maybe given</strong>
+              </td>
               <td>
                 <input
                   type="radio"
@@ -157,7 +162,9 @@ function Pcp() {
               </td>
             </tr>
             <tr>
-              <td><strong>Amount of cash award recommended</strong></td>
+              <td>
+                <strong>Amount of cash award recommended</strong>
+              </td>
               <td id="amountCell">
                 <input
                   type="number"
@@ -168,18 +175,27 @@ function Pcp() {
                   required
                 />
                 <button onClick={submitAmount}>Submit</button>
-                <p id="approvalMessage" style={{ color: amount ? 'blue' : 'red' }}>
+                <p
+                  id="approvalMessage"
+                  style={{ color: amount ? "blue" : "red" }}
+                >
                   {approvalMessage}
                 </p>
                 {amount && (
-                  <button id="approveButton" onClick={approveAmount} style={{ display: 'inline-block' }}>
+                  <button
+                    id="approveButton"
+                    onClick={approveAmount}
+                    style={{ display: "inline-block" }}
+                  >
                     Approve
                   </button>
                 )}
               </td>
             </tr>
             <tr>
-              <td><strong>Enter the Remarks/Comments(if any)</strong></td>
+              <td>
+                <strong>Enter the Remarks/Comments(if any)</strong>
+              </td>
               <td id="remarksCell">
                 <textarea
                   id="comments"
@@ -193,17 +209,57 @@ function Pcp() {
             </tr>
             <tr>
               <td id="uploadCell">
-                <label><strong>Supporting document for Scopus indexing of article (if exists):</strong></label>
-                <input type="file" id="scopusDoc" onChange={handleFileChange} accept=".pdf" />
-                <br /><br />
-                <label><strong>Supporting document for Impact Factor of article (if exists):</strong></label>
-                <input type="file" id="impactFactorDoc1" onChange={handleFileChange} accept=".pdf" />
-                <br /><br />
-                <label><strong>Supporting document for Impact Factor of article (if exists):</strong></label>
-                <input type="file" id="impactFactorDoc2" onChange={handleFileChange} accept=".pdf" />
-                <br /><br />
-                <label><strong>Any other relevant document (if any):</strong></label>
-                <input type="file" id="otherDoc" onChange={handleFileChange} accept=".pdf" />
+                <label>
+                  <strong>
+                    Supporting document for Scopus indexing of article (if
+                    exists):
+                  </strong>
+                </label>
+                <input
+                  type="file"
+                  id="scopusDoc"
+                  onChange={handleFileChange}
+                  accept=".pdf"
+                />
+                <br />
+                <br />
+                <label>
+                  <strong>
+                    Supporting document for Impact Factor of article (if
+                    exists):
+                  </strong>
+                </label>
+                <input
+                  type="file"
+                  id="impactFactorDoc1"
+                  onChange={handleFileChange}
+                  accept=".pdf"
+                />
+                <br />
+                <br />
+                <label>
+                  <strong>
+                    Supporting document for Impact Factor of article (if
+                    exists):
+                  </strong>
+                </label>
+                <input
+                  type="file"
+                  id="impactFactorDoc2"
+                  onChange={handleFileChange}
+                  accept=".pdf"
+                />
+                <br />
+                <br />
+                <label>
+                  <strong>Any other relevant document (if any):</strong>
+                </label>
+                <input
+                  type="file"
+                  id="otherDoc"
+                  onChange={handleFileChange}
+                  accept=".pdf"
+                />
               </td>
             </tr>
             <tr>
@@ -223,7 +279,12 @@ function Pcp() {
       </form>
       {generatedPdfUrl && (
         <div className="pdf-viewer">
-          <iframe title="Generated PDF Report" src={generatedPdfUrl} width="100%" height="600px" />
+          <iframe
+            title="Generated PDF Report"
+            src={generatedPdfUrl}
+            width="100%"
+            height="600px"
+          />
         </div>
       )}
     </div>
@@ -231,4 +292,3 @@ function Pcp() {
 }
 
 export default Pcp;
-
