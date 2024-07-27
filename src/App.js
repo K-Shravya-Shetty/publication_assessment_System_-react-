@@ -23,6 +23,7 @@ export default App;*/
 import React from 'react';
 import { Routes, Route } from 'react-router-dom';
 import Dashboard from './components/Dashboard/Dashboard';
+import FacultyDash from './components/FacultyDash/FacultyDash';
 import NewApplication from './components/NewApplication/NewApplication';
 import LoginForm from './components/LoginForm/LoginForm';
 
@@ -33,6 +34,7 @@ function App() {
       <Route path="/" element={<Dashboard />} />
       <Route path="/newApplication" element={<NewApplication />} />
       <Route path="/LoginForm" element={<LoginForm />} />
+      <Route path="/facultyDash" element={<FacultyDash />} /> 
       <Route path="*" element={<div>Page Not Found</div>} />
     </Routes>
   );
