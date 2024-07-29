@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import "./LoginForm.css"; // Ensure you create corresponding CSS files or include styles in App.css
 import sjecLogo from "../../images/sjec-logo.png";
+import { useNavigate } from 'react-router-dom';
 
 function LoginForm() {
   const [email, setEmail] = useState("");
@@ -15,6 +16,7 @@ function LoginForm() {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [loginMessage, setLoginMessage] = useState("");
 
+  const navigate = useNavigate();
   const validateEmail = (email) => {
     const re = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
     return re.test(email);
@@ -44,7 +46,7 @@ function LoginForm() {
 
     if (valid) {
       try {
-        const response = await fetch("http://localhost:5000/api/login", {
+        const response = await fetch("http://localhost:3001/api/login", {
           method: "POST",
           headers: {
             "Content-Type": "application/json",
@@ -58,6 +60,17 @@ function LoginForm() {
           setIsLoggedIn(true);
           setLoginMessage(data.message);
           setIsPopupActive(false);
+          if (role === 'admin') {
+            navigate('/'); // Redirect to Dashboard
+          } else if (role === 'faculty') {
+            navigate('/facultyDash'); // Redirect to FacultyDash
+          }
+          else if (role === 'committee member') {
+            navigate('/');
+          } 
+          else {
+            setLoginMessage('Unauthorized role.');
+          }
         } else {
           setLoginMessage(data.message);
         }

@@ -6,6 +6,7 @@ const cors = require('cors');
 const multer = require('multer');
 const File = require('./models/File');
 const app = express();
+const User = require('./models/User');
 
 const port = process.env.PORT || 3001; // Changed port to 3001
 const mongoURI = process.env.MONGODB_URI;
@@ -63,13 +64,14 @@ app.post('/api/login', async (req, res) => {
   const { email, password, role } = req.body;
 
   try {
-    const user = await user.findOne({ email, role });
+    const user = await User.findOne({ email, role });
     if (user && user.password === password) {
       res.status(200).json({ message: 'Login successful' });
     } else {
       res.status(401).json({ message: 'Invalid credentials' });
     }
   } catch (error) {
+    console.error('Login error:', error); // Detailed error logging
     res.status(500).json({ message: 'Server error' });
   }
 });
