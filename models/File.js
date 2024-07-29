@@ -1,12 +1,19 @@
-// models/File.js
 const mongoose = require('mongoose');
+const Schema = mongoose.Schema;
 
-const fileSchema = new mongoose.Schema({
-  filename: String,
-  contentType: String,
-  data: Buffer,
+const FileSchema = new Schema({
+  filename: {
+    type: String,
+    required: true,
+  },
+  contentType: {
+    type: String,
+    required: true,
+  },
+  data: {
+    type: Buffer,
+    required: true,
+  },
 });
 
-const File = mongoose.model('File', fileSchema);
-
-module.exports = File;
+module.exports = mongoose.model('File', FileSchema);

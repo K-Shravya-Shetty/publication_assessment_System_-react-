@@ -5,10 +5,10 @@ const bodyParser = require('body-parser');
 const cors = require('cors');
 const multer = require('multer');
 const File = require('./models/File');
-const app = express();
 const User = require('./models/User');
 
-const port = process.env.PORT || 3001; // Changed port to 3001
+const app = express();
+const port = process.env.PORT || 3001;
 const mongoURI = process.env.MONGODB_URI;
 
 // Middleware
@@ -16,7 +16,7 @@ app.use(bodyParser.json());
 app.use(cors());
 
 // Create MongoDB connection
-mongoose.connect(mongoURI)
+mongoose.connect(mongoURI, { useNewUrlParser: true, useUnifiedTopology: true })
   .then(() => console.log('MongoDB connected'))
   .catch(err => console.log(err));
 
@@ -71,10 +71,36 @@ app.post('/api/login', async (req, res) => {
       res.status(401).json({ message: 'Invalid credentials' });
     }
   } catch (error) {
-    console.error('Login error:', error); // Detailed error logging
+    console.error('Login error:', error);
     res.status(500).json({ message: 'Server error' });
   }
 });
+// Fetch all applications
+app.get('/applications', async (req, res) => {
+  try {
+    const files = await File.find({});
+    res.json(files);
+  } catch (err) {
+    res.status(500).json({ error: 'Error fetching applications' });
+  }
+});
+
+// Update application status
+app.put('/applications/:id', async (req, res) => {
+  const { id } = req.params;
+  const { status } = req.body;
+
+  try {
+    const updatedFile = await File.findByIdAndUpdate(id, { status }, { new: true });
+    if (!updatedFile) {
+      return res.status(404).json({ error: 'Application not found' });
+    }
+    res.json(updatedFile);
+  } catch (err) {
+    res.status(500).json({ error: 'Error updating application' });
+  }
+});
+
 
 app.listen(port, () => {
   console.log(`Server running on port ${port}`);
