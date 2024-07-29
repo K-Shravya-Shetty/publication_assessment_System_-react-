@@ -61,7 +61,7 @@ function LoginForm() {
           setLoginMessage(data.message);
           setIsPopupActive(false);
           if (role === 'admin') {
-            navigate('/'); // Redirect to Dashboard
+            navigate('/AdminDash'); // Redirect to Admin Dashboard
           } else if (role === 'faculty') {
             navigate('/facultyDash'); // Redirect to FacultyDash
           }

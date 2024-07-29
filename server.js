@@ -101,6 +101,17 @@ app.put('/applications/:id', async (req, res) => {
   }
 });
 
+//Fetch and Display users on admin dashboard
+app.get('/getUsers', async (req, res) => {
+  try {
+    const users = await User.find({});
+    res.status(200).json(users);
+  } catch (error) {
+    console.error('Error fetching users:', error);
+    res.status(500).json({ message: 'Server error' });
+  }
+});
+
 
 app.listen(port, () => {
   console.log(`Server running on port ${port}`);
