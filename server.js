@@ -91,15 +91,20 @@ app.put('/applications/:id', async (req, res) => {
   const { status } = req.body;
 
   try {
+    console.log(`Updating application with ID: ${id} to status: ${status}`);
     const updatedFile = await File.findByIdAndUpdate(id, { status }, { new: true });
     if (!updatedFile) {
       return res.status(404).json({ error: 'Application not found' });
     }
+    console.log('Updated File:', updatedFile); // Add log
     res.json(updatedFile);
   } catch (err) {
+    console.error('Error updating application:', err);
     res.status(500).json({ error: 'Error updating application' });
   }
 });
+
+
 
 //Fetch and Display users on admin dashboard
 app.get('/getUsers', async (req, res) => {
