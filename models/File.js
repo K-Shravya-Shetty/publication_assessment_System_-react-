@@ -14,6 +14,11 @@ const FileSchema = new Schema({
     type: Buffer,
     required: true,
   },
+  status: {
+    type: String,
+    enum: ['Pending', 'Approved'],
+    default: 'Pending',
+  },
 });
 
 module.exports = mongoose.model('File', FileSchema);
