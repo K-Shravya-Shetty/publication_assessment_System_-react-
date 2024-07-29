@@ -26,7 +26,6 @@ const Dashboard = () => {
   const handleView = (filename) => {
     window.open(`http://localhost:3001/file/${filename}`);
   };
-
   const handleApprove = async (id) => {
     try {
       console.log(`Approving application with ID: ${id}`);
