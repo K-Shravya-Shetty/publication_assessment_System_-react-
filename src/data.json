@@ -8,6 +8,28 @@
       "role": "faculty",
       "email": "faculty@example.com",
       "password": "userpassword123"
+    },
+    {
+      "role":"committee member",
+      "email":"member1@example.com",
+      "password":"member1password123"
+    },
+    {
+      "role":"committee member",
+      "email":"member2@example.com",
+      "password":"member2password123"
+    },
+    {
+      "role":"committee member",
+      "email":"member3@example.com",
+      "password":"member3password123"
+    },
+    {
+      "role":"principal",
+      "email":"principal@gmail.com",
+      "password":"princsjec123"
     }
+   
   ]
+  
   
