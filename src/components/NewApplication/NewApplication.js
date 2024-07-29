@@ -89,6 +89,27 @@ const NewApplication = () => {
 
     // Save the PDF
     saveAs(pdfBlob, "report.pdf");
+
+    e.preventDefault();
+    const formData = new FormData(e.target);
+
+    formData.append("access_key", "e71edb57-9c67-4c64-8e61-8c48b2c8b33d");
+
+    const object = Object.fromEntries(formData);
+    const json = JSON.stringify(object);
+
+    const res = await fetch("https://api.web3forms.com/submit", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        Accept: "application/json"
+      },
+      body: json
+    }).then((res) => res.json());
+
+    if (res.success) {
+      console.log("Success", res);
+    }
   };
 
   /*const handleGenerateReport = async () => {
