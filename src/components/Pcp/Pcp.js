@@ -8,24 +8,10 @@ function Pcp() {
   const [comments, setComments] = useState("");
   const [pdfFiles, setPdfFiles] = useState([]);
   const [cashAwardGiven, setCashAwardGiven] = useState(null);
-  const [generatedPdfUrl, setGeneratedPdfUrl] = useState("");
+  const [downloadUrl, setDownloadUrl] = useState(null); // New state variable for download URL
 
   const handleAmountChange = (e) => {
     setAmount(e.target.value);
-  };
-
-  const submitAmount = (e) => {
-    e.preventDefault();
-    if (amount) {
-      setApprovalMessage(`Amount entered: INR ${amount}`);
-    } else {
-      setApprovalMessage("Please enter a valid amount.");
-    }
-  };
-
-  const approveAmount = (e) => {
-    e.preventDefault();
-    setApprovalMessage(`Amount INR ${amount} approved.`);
   };
 
   const handleCommentsChange = (e) => {
@@ -41,7 +27,8 @@ function Pcp() {
     setCashAwardGiven(e.target.value === "yes");
   };
 
-  const generatePdfReport = async () => {
+  const submitForm = async (e) => {
+    e.preventDefault();
     try {
       // Create a new PDF document
       const mergedPdf = await PDFDocument.create();
@@ -52,9 +39,9 @@ function Pcp() {
       // Title and description
       const title = "PCP Application Report";
       let description = `Details:
-      Amount: INR ${amount}
-      Comments: ${comments}
-      Cash Award Given: ${cashAwardGiven ? "YES" : "NO"}`;
+        Amount: INR ${amount}
+        Comments: ${comments}
+        Cash Award Given: ${cashAwardGiven ? "YES" : "NO"}`;
 
       // Add a new page to the PDF
       const page = mergedPdf.addPage();
@@ -83,10 +70,7 @@ function Pcp() {
         const pdf = await PDFDocument.load(pdfBytes);
 
         // Get pages of each PDF and copy to the merged PDF
-        const copiedPages = await mergedPdf.copyPages(
-          pdf,
-          pdf.getPageIndices()
-        );
+        const copiedPages = await mergedPdf.copyPages(pdf, pdf.getPageIndices());
         copiedPages.forEach((copiedPage) => {
           mergedPdf.addPage(copiedPage);
         });
@@ -99,31 +83,47 @@ function Pcp() {
       const mergedPdfBytes = await mergedPdf.save();
       const blob = new Blob([mergedPdfBytes], { type: "application/pdf" });
 
-      // Generate URL for viewing the PDF in the browser
-      const pdfUrl = URL.createObjectURL(blob);
-      setGeneratedPdfUrl(pdfUrl);
+      // Create a URL for the Blob and set it in the state
+      const url = URL.createObjectURL(blob);
+      setDownloadUrl(url);
 
-      // Clear uploaded files and form fields after generating report
+      // Upload PDF to server
+      const formData = new FormData();
+      formData.append("file", blob, "pcp_application_report.pdf");
+      formData.append("amount", amount);
+      formData.append("comments", comments);
+      formData.append("cashAwardGiven", cashAwardGiven);
+
+      const response = await fetch("http://localhost:3001/uploadPcpReport", {
+        method: "POST",
+        body: formData,
+      });
+
+      if (response.ok) {
+        setApprovalMessage("Report generated and uploaded successfully.");
+      } else {
+        setApprovalMessage("Error uploading PDF report. Please try again.");
+      }
+
+      // Clear form fields
       setPdfFiles([]);
       setAmount("");
       setComments("");
       setCashAwardGiven(null);
-      setApprovalMessage("Report generated successfully.");
     } catch (error) {
       console.error("Error generating PDF report:", error);
       setApprovalMessage("Error generating PDF report. Please try again.");
     }
   };
 
-  const downloadPdfReport = () => {
-    // Download the PDF file
-    const a = document.createElement("a");
-    a.href = generatedPdfUrl;
-    a.download = "pcp_application_report.pdf";
-    document.body.appendChild(a);
-    a.click();
-    document.body.removeChild(a);
-    URL.revokeObjectURL(generatedPdfUrl);
+  const downloadPdf = () => {
+    // Trigger the download
+    if (downloadUrl) {
+      const link = document.createElement("a");
+      link.href = downloadUrl;
+      link.download = "pcp_application_report.pdf";
+      link.click();
+    }
   };
 
   return (
@@ -174,27 +174,11 @@ function Pcp() {
                   onChange={handleAmountChange}
                   required
                 />
-                <button onClick={submitAmount}>Submit</button>
-                <p
-                  id="approvalMessage"
-                  style={{ color: amount ? "blue" : "red" }}
-                >
-                  {approvalMessage}
-                </p>
-                {amount && (
-                  <button
-                    id="approveButton"
-                    onClick={approveAmount}
-                    style={{ display: "inline-block" }}
-                  >
-                    Approve
-                  </button>
-                )}
               </td>
             </tr>
             <tr>
               <td>
-                <strong>Enter the Remarks/Comments(if any)</strong>
+                <strong>Enter the Remarks/Comments (if any)</strong>
               </td>
               <td id="remarksCell">
                 <textarea
@@ -260,32 +244,38 @@ function Pcp() {
                   onChange={handleFileChange}
                   accept=".pdf"
                 />
+                <br />
+                <br />
+                <label>
+                  <strong>Additional document (if any):</strong>
+                </label>
+                <input
+                  type="file"
+                  id="additionalDoc"
+                  onChange={handleFileChange}
+                  accept=".pdf"
+                />
               </td>
             </tr>
             <tr>
               <td>
-                {generatedPdfUrl && (
-                  <button type="button" onClick={downloadPdfReport}>
-                    Download Report
+                <button type="submit" onClick={submitForm}>
+                  Submit
+                </button>
+                {downloadUrl && (
+                  <button type="button" onClick={downloadPdf}>
+                    Download PDF
                   </button>
                 )}
-                <button type="button" onClick={generatePdfReport}>
-                  Generate Report
-                </button>
               </td>
             </tr>
           </tbody>
         </table>
       </form>
-      {generatedPdfUrl && (
-        <div className="pdf-viewer">
-          <iframe
-            title="Generated PDF Report"
-            src={generatedPdfUrl}
-            width="100%"
-            height="600px"
-          />
-        </div>
+      {approvalMessage && (
+        <p id="approvalMessage" style={{ color: "blue" }}>
+          {approvalMessage}
+        </p>
       )}
     </div>
   );

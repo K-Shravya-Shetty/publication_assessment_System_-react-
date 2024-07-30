@@ -6,7 +6,7 @@ const cors = require('cors');
 const multer = require('multer');
 const File = require('./models/File');
 const User = require('./models/User');
-
+const PcpReport = require('./models/PcpReport');
 const app = express();
 const port = process.env.PORT || 3001;
 const mongoURI = process.env.MONGODB_URI;
@@ -117,6 +117,40 @@ app.get('/getUsers', async (req, res) => {
   }
 });
 
+
+app.post('/uploadPcpReport', upload.single('file'), async (req, res) => {
+  if (!req.file) {
+    return res.status(400).json({ error: 'No file uploaded' });
+  }
+
+  const { amount, comments, cashAwardGiven } = req.body;
+
+  try {
+    const newPcpReport = new PcpReport({
+      filename: req.file.originalname,
+      contentType: req.file.mimetype,
+      data: req.file.buffer,
+      amount: Number(amount),
+      comments,
+      cashAwardGiven: cashAwardGiven === 'true',
+    });
+
+    await newPcpReport.save();
+    res.json({ report: newPcpReport });
+  } catch (err) {
+    res.status(500).json({ error: 'Error saving PCP report' });
+  }
+});
+
+// Fetch all PCP reports
+app.get('/pcpReports', async (req, res) => {
+  try {
+    const reports = await PcpReport.find({});
+    res.json(reports);
+  } catch (err) {
+    res.status(500).json({ error: 'Error fetching PCP reports' });
+  }
+});
 
 app.listen(port, () => {
   console.log(`Server running on port ${port}`);
