@@ -1,37 +1,10 @@
-/* .nav {
-    background-color: #86C232;
-  }
-  
-  a {
-    text-decoration: none;
-    font-size: 20px;
-    color: black;
-  }
-  
-  #list {
-    display: flex;
-    list-style-type: none;
-    align-items: center;
-    padding: 0.5em;
-    margin: 0;
-  }
-  
-  li {
-    margin: 0 1em;
-  }
-  
-  li.logo {
-    margin-right: auto;
-  }
-   */
-
-   .nav {
+  /* .nav {
     background-color: #914F1E;
-    width: 100%; /* Full width of the page */
-    position: fixed; /* Fix it at the top if desired */
+    width: 100%; 
+    position: fixed; 
     top: 0;
     left: 0;
-    z-index: 1000; /* Ensure it stays above other content */
+    z-index: 1000; 
   }
   
 .dashboard-container  a {
@@ -50,8 +23,8 @@
     align-items: center;
     padding: 0.5em;
     margin: 0;
-    width: 100%; /* Full width */
-    box-sizing: border-box; /* Include padding and border in the element's total width and height */
+    width: 100%; 
+    box-sizing: border-box; 
   }
   
   li {
@@ -62,15 +35,15 @@
     margin-right: auto;
   }
   
-  /* New Widget Styles */
+
   .dashboard-container {
     display: flex;
     flex-direction: column;
     align-items: center;
-    margin-top: 80px; /* Adjusted to account for the fixed navigation bar height */
-    padding: 0 10px; /* Add some padding on the sides for better appearance */
+    margin-top: 80px; 
+    padding: 0 10px; 
     width: 100%;
-    box-sizing: border-box; /* Include padding and border in the element's total width and height */
+    box-sizing: border-box; 
   }
   
   .widgets {
@@ -80,25 +53,24 @@
   }
   
   .widget {
-    background-color: #F7DCB9; /* Light pastel blue */
+    background-color: #F7DCB9; 
     border: 1px solid #ddd;
-    border-radius: 20px; /* Rounded corners */
+    border-radius: 20px; 
     padding: 20px;
     margin: 10px;
     text-align: center;
     width: 200px;
-    height: 200px; /* Making it a square */
+    height: 200px; 
     display: flex;
     align-items: center;
     justify-content: center;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-    transition: transform 0.3s, box-shadow 0.3s; /* Smooth transition for hover effect */
+    transition: transform 0.3s, box-shadow 0.3s;
   }
   
   .widget:hover {
-    transform: scale(1.05); /* Slightly enlarge on hover */
-    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2); /* 
-    Deeper shadow on hover */
+    transform: scale(1.05); 
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2); 
     background-color: #DEAC80;
   }
   
@@ -112,4 +84,149 @@
   .widget-link:hover {
     color: white;
   }
+   */
+
+   /* Navigation Bar */
+
+
+
+
+
+
+   /* Navigation Bar */
+   .nav {
+    background: linear-gradient(135deg, #87CEFA, #B0E0E6, #4682B4); /* Light blue gradient with dark blue */
+    width: 100%; /* Full width of the page */
+    position: fixed; /* Fix it at the top */
+    top: 0;
+    left: 0;
+    z-index: 1000; /* Ensure it stays above other content */
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Subtle shadow */
+    padding: 15px 30px; /* Increased padding for better spacing */
+    transition: background 0.3s ease, box-shadow 0.3s ease; /* Smooth transition */
+  }
   
+  /* Hover effect for nav bar */
+  .nav:hover {
+    background: linear-gradient(135deg, #B0E0E6, #87CEFA, #4682B4); /* Reverse gradient on hover */
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2); /* Deeper shadow on hover */
+  }
+
+/* Dashboard Container */
+.dashboard-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-top: 80px; /* Space for fixed navigation */
+  padding: 0 20px; /* Padding on sides */
+  width: 100%;
+  box-sizing: border-box; /* Include padding and border in total width and height */
+}
+
+/* Dashboard Links */
+.dashboard-container a {
+  text-decoration: none;
+  font-size: 22px;
+  color: #FFFFFF;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; /* Modern font */
+  font-weight: 600; /* Bold font weight */
+  transition: color 0.3s ease, transform 0.3s ease; /* Smooth transitions */
+}
+
+/* Hover effect for dashboard links */
+.dashboard-container a:hover {
+  color: #0000B9; /* Light yellow on hover */
+  transform: scale(1.05); /* Slightly enlarge */
+}
+
+/* Navigation List */
+#list {
+  display: flex;
+  list-style-type: none;
+  align-items: center;
+  padding: 0;
+  margin: 0;
+  width: 100%;
+}
+
+/* List Items */
+li {
+  margin: 0 1em;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; /* Modern font */
+}
+
+/* Logo Container */
+li.logo {
+  display: flex;
+  align-items: center; /* Center vertically */
+  justify-content: center; /* Center horizontally */
+}
+
+/* Logo Image */
+.logo img {
+  width: 90px; /* Adjust width */
+  height: auto; /* Maintain aspect ratio */
+}
+
+/* Widgets Container */
+.widgets {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 20px; /* Space between widgets */
+  margin: 20px 0; /* Space above and below widgets */
+}
+
+/* Widget Styles */
+.widget {
+  background-color: #F7DCB9; /* Light pastel background */
+  border: 1px solid #ddd;
+  border-radius: 15px; /* Rounded corners */
+  padding: 20px;
+  margin: 10px;
+  text-align: center;
+  width: 220px; /* Width of widget */
+  height: 220px; /* Height of widget */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2); /* Enhanced shadow */
+  transition: transform 0.4s ease, box-shadow 0.4s ease, background-color 0.4s ease; /* Smooth transitions */
+}
+
+/* Hover effect for widgets */
+.widget:hover {
+  transform: scale(1.1); /* Enlarge on hover */
+  box-shadow: 0 12px 24px rgba(0, 0, 0, 0.3); /* Deeper shadow on hover */
+  background-color: #DEAC80; /* Darker background on hover */
+  animation: bounce 1s ease; /* Bounce animation */
+}
+
+/* Widget Link Styles */
+.widget-link {
+  text-decoration: none;
+  color: #333;
+  font-size: 18px;
+  font-weight: bold;
+  transition: color 0.3s ease, text-shadow 0.3s ease; /* Smooth transition */
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; /* Modern font */
+}
+
+/* Hover effect for widget links */
+.widget-link:hover {
+  color: #FFFFFF; /* Change color on hover */
+  text-shadow: 0 2px 5px rgba(0, 0, 0, 0.3); /* Text shadow on hover */
+}
+
+/* Bounce Animation */
+@keyframes bounce {
+  0%, 20%, 50%, 80%, 100% {
+    transform: translateY(0);
+  }
+  40% {
+    transform: translateY(-20px);
+  }
+  60% {
+    transform: translateY(-10px);
+  }
+}
