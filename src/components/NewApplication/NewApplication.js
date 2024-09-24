@@ -52,7 +52,7 @@ const NewApplication = () => {
     },
   });
 
-  /*const [generatedPdfUrl, setGeneratedPdfUrl] = useState("");*/
+  // const [generatedPdfUrl, setGeneratedPdfUrl] = useState("");
 
   const handleChange = (e) => {
     const { name, value } = e.target;

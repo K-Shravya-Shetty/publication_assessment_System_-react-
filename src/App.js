@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 /* import './App.css';
 // import Dashboard from './components/Dashboard/Dashboard';
 import LoginForm from './components/LoginForm/LoginForm';
@@ -18,6 +19,8 @@ function App() {
 
 export default App;*/
 
+=======
+>>>>>>> 940d7f218c4abc57ed75f18ca1aec1fdd76430ed
 import React from "react";
 import { Routes, Route } from "react-router-dom";
 import Dashboard from "./components/Dashboard/Dashboard";
@@ -31,12 +34,16 @@ import LoginForm from "./components/LoginForm/LoginForm";
 function App() {
   return (
     <Routes>
-      <Route path="/" element={<Dashboard />} />
+      <Route path="/" element={<LoginForm />} />
       <Route path="/newApplication" element={<NewApplication />} />
       <Route path="/LoginForm" element={<LoginForm />} />
       <Route path="/facultyDash" element={<FacultyDash />} />
       <Route path="/AdminDash" element={<AdminDash />} />
       <Route path="/Pcp" element={<Pcp />} />
+<<<<<<< HEAD
+=======
+      <Route path="/Dashboard" element={<Dashboard />} />
+>>>>>>> 940d7f218c4abc57ed75f18ca1aec1fdd76430ed
       <Route path="*" element={<div>Page Not Found</div>} />
     </Routes>
   );

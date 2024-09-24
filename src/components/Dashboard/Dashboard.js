@@ -65,10 +65,14 @@ const Dashboard = () => {
             <img src={logo} alt="SJEC Logo" style={{ height: "50px" }} />
           </li>
           <li>
-            <Link to="/">Home</Link>
+            <Link to="/Dashboard">Home</Link>
           </li>
           <li>
+<<<<<<< HEAD
             <Link to="/Pcp">New Attachment</Link>
+=======
+            <Link to="/Pcp">New Application</Link>
+>>>>>>> 940d7f218c4abc57ed75f18ca1aec1fdd76430ed
           </li>
           <li>
             <Link to="/LoginForm">Logout</Link>
