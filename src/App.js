@@ -1,4 +1,3 @@
-
 /* import './App.css';
 // import Dashboard from './components/Dashboard/Dashboard';
 import LoginForm from './components/LoginForm/LoginForm';
@@ -19,17 +18,15 @@ function App() {
 
 export default App;*/
 
+import React from "react";
+import { Routes, Route } from "react-router-dom";
+import Dashboard from "./components/Dashboard/Dashboard";
+import FacultyDash from "./components/FacultyDash/FacultyDash";
+import AdminDash from "./components/AdminDash/AdminDash";
 
-import React from 'react';
-import { Routes, Route } from 'react-router-dom';
-import Dashboard from './components/Dashboard/Dashboard';
-import FacultyDash from './components/FacultyDash/FacultyDash';
-import AdminDash from './components/AdminDash/AdminDash';
-import AdminDash from './components/AdminDash/AdminDash';
-import NewApplication from './components/NewApplication/NewApplication';
-import Pcp from './components/Pcp/Pcp';
-import LoginForm from './components/LoginForm/LoginForm';
-
+import NewApplication from "./components/NewApplication/NewApplication";
+import Pcp from "./components/Pcp/Pcp";
+import LoginForm from "./components/LoginForm/LoginForm";
 
 function App() {
   return (
@@ -37,9 +34,9 @@ function App() {
       <Route path="/" element={<Dashboard />} />
       <Route path="/newApplication" element={<NewApplication />} />
       <Route path="/LoginForm" element={<LoginForm />} />
-      <Route path="/facultyDash" element={<FacultyDash />} /> 
-      <Route path="/AdminDash" element={<AdminDash />} /> 
-      <Route path="/Pcp" element={<Pcp />} /> 
+      <Route path="/facultyDash" element={<FacultyDash />} />
+      <Route path="/AdminDash" element={<AdminDash />} />
+      <Route path="/Pcp" element={<Pcp />} />
       <Route path="*" element={<div>Page Not Found</div>} />
     </Routes>
   );
