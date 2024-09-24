@@ -66,7 +66,7 @@ function LoginForm() {
             navigate('/facultyDash'); // Redirect to FacultyDash
           }
           else if (role === 'committee member') {
-            navigate('/');
+            navigate('/Dashboard');
           } 
           else {
             setLoginMessage('Unauthorized role.');
